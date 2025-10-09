@@ -71,6 +71,7 @@ const props = defineProps<{
           transition="all ease-in-out duration-400"
           absolute right-0 size-16 translate-y-2
           grayscale-100
+          alt=""
         >
       </template>
     </RouterLink>
