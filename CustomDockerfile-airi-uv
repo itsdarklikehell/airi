@@ -31,8 +31,8 @@ RUN python3 -m spacy download en_core_web_sm
 RUN python3 install.sh
 RUN python3 -m unidic download
 
-# Expose port 7272 (the new default port)
-EXPOSE 7272
+# Expose port 5137 (the new default port)
+EXPOSE 5137
 
 WORKDIR /airi/src
 
