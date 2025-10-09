@@ -1,0 +1,42 @@
+# Base image
+FROM nvidia/cuda:13.0.1-cudnn-devel-ubuntu24.04 AS base
+
+# Set noninteractive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update and install dependencies
+RUN apt-get -o Acquire::AllowInsecureRepositories=true update && \
+    apt-get install -y libxcb-xfixes0 libxcb-shape0 || true && \
+    apt-get install -y --no-install-recommends wget build-essential ffmpeg pipx git curl python3 python3-pip || true && \
+    apt --fix-broken install -y && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+    
+FROM continuumio/miniconda3
+    
+# Set working directory
+WORKDIR /airi
+
+# Copy application code to the container
+COPY . /airi
+
+RUN conda create -n airi python=3.10 pip=24.0 -y
+
+# Make RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "airi", "/bin/bash", "-c"]
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+# RUN pip install funasr modelscope huggingface_hub pywhispercpp edge-tts azure-cognitiveservices-speech py3-tts
+RUN pip install -r requirements.txt
+RUN pip install -r requirements.no_deps.txt
+RUN python3 -m spacy download en_core_web_sm
+RUN python3 install.sh
+RUN python3 -m unidic download
+
+# Expose port 7272 (the new default port)
+EXPOSE 7272
+
+WORKDIR /airi/src
+
+# RUN uv run main.py --help
+
+# CMD ["python3", "main.py --config=example",]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "airi", "python3", "main.py --config=example"]

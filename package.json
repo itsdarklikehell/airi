@@ -95,6 +95,7 @@
     "onlyBuiltDependencies": [
       "@discordjs/opus",
       "@ffmpeg-installer/darwin-arm64",
+      "@ffmpeg-installer/linux-x64",
       "@parcel/watcher",
       "bufferutil",
       "electron",
