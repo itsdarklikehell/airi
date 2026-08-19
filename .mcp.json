@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "showet": {
+      "command": "/home/rizzo/.openclaw/workspace/projects/showet/.venv/bin/python",
+      "args": ["/home/rizzo/.openclaw/workspace/projects/showet/showet_mcp_server.py"],
+      "description": "Showet demoscene demo-runner — list platforms, search Pouet.net demos, prepare playback."
+    }
+  }
+}
