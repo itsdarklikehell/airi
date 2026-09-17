@@ -22,25 +22,31 @@ jobs:
         uses: nbprojekt/gource-action@57256d303c5a9a5e72ed92ba13e3e83c5ec8b257 # v1.3.0
         with:
           gource_opts: >-
-            --max-files 1000
+            --max-files 1500
             --key
-            -800x600
+            -1920x1080
             --highlight-users
             --filename-time 3
-            --output-framerate 25
-            -s 0.6
+            --output-framerate 30
+            -s 0.4
             --multi-sampling
             --auto-skip-seconds 0.1
             --stop-at-end
-            --hide mouse,progress
+            --hide mouse,progress,date,filenames
+
+      - name: Install ffmpeg (runner)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
 
       - name: Upscale + re-encode
         run: |
           ffmpeg -y -i ./gource/gource.mp4 \
-            -c:v libx264 -crf 19 -level 3.1 -preset slow -tune film \
-            -filter:v "scale=-1:720" -sws_flags lanczos \
-            -c:a aac -b:a 128k \
-            ./output.mp4
+            -c:v libx264 -crf 18 -level 4.1 -preset medium -tune film \
+            -filter:v "scale=-1:1080" -sws_flags lanczos \
+            -c:a aac -b:a 192k -ar 48000 \
+            -movflags +faststart \
+            ./gource.mp4
 
       - name: Upload video
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

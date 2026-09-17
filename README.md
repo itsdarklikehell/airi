@@ -274,6 +274,27 @@ Capable of
 > like to try developing the desktop version, please make sure you read [CONTRIBUTING.md](./.github/CONTRIBUTING.md)
 > to setup the environment correctly.
 
+### Gource Visualization
+
+De ontwikkelhistorie van dit project in een film:
+
+<video src="https://raw.githubusercontent.com/itsdarklikehell/airi/main/gource.mp4" controls width="100%"></video>
+
+*De video wordt automatisch gegenereerd door de [Gource workflow](.github/workflows/gource.yml) bij elke push.*
+
+Lokale video genereren:
+```bash
+gource --max-files 1500 --key -1920x1080 \
+  --highlight-users --filename-time 3 --output-framerate 30 \
+  -s 0.4 --multi-sampling --auto-skip-seconds 0.1 \
+  --stop-at-end --hide mouse,progress,date,filenames \
+  -o gource.ppm
+
+ffmpeg -y -r 15 -f image2pipe -vcodec ppm -i gource.ppm \
+  -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p \
+  -c:a aac -b:a 192k gource.mp4
+```
+
 ```shell
 pnpm i
 pnpm dev
