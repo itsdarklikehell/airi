@@ -12,6 +12,30 @@ auth/OIDC routes.
 - Redis cache, configuration KV, and cross-instance Pub/Sub.
 - Local verification of Auth-issued OIDC JWTs through public JWKS.
 
+## Redis cache
+
+`src/libs/redis/cache.ts` provides stateless functions for string snapshots.
+`writeCache` requires a positive TTL and writes the value and expiry atomically.
+`readCache` accepts only expiring entries and never renews their expiry.
+Redis errors propagate to the caller. These functions do not manage locks,
+queues, Pub/Sub, connections, or database transactions.
+
+`src/services/domain/flux-cache.ts` owns balance validation and the 60-second
+Flux TTL. Flux services use its read, write, and invalidation functions.
+ConfigKV shares the write function while retaining its existing read policy.
+Keys use domain names: `config:{key}`, `stripe:prices`, and `user:{userId}:flux`.
+The cache functions do not add a key prefix.
+
+## Payment
+
+`src/services/domain/payment` owns pack grant and `payment_order` rows.
+Checkout and package list live in the Stripe adapter on `/api/v1/stripe/*`.
+ConfigKV stores `STRIPE_FLUX_PRODUCT_ID`. The adapter lists that product's
+Prices from Stripe. `GET /packages` returns `stripePriceId`. Checkout accepts
+`stripePriceId`. Label, flux amount, and display prices come from Price
+metadata and Stripe amounts.
+The adapter maps a verified session onto a `ClaimReceipt`, then calls `settle`.
+
 ## Run locally
 
 ```sh

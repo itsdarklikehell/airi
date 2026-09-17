@@ -20,7 +20,8 @@ function createTestDeps() {
     providerService: {} as never,
     fluxService: {} as never,
     fluxTransactionService: {} as never,
-    stripeService: {} as never,
+    paymentService: {} as never,
+    stripe: null,
     billingService: {} as never,
     ttsMeter: {} as never,
     requestLogService: {} as never,
@@ -28,7 +29,6 @@ function createTestDeps() {
     providerCatalogService: {} as never,
     productEventService: {
       track: vi.fn(async () => undefined),
-      trackGeneration: vi.fn(async () => undefined),
     } as never,
     configKV: { getOrThrow: vi.fn() } as never,
     redis: redis as never,
