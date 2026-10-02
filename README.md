@@ -180,6 +180,12 @@ Therefore, this project, AIRI, offers another possibility here: **let you own yo
 
 ## Recent DevLogs & Stories
 
+
+[![CI](https://github.com/itsdarklikehell/airi/actions/workflows/ci.yml/badge.svg)](https://github.com/itsdarklikehell/airi/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/itsdarklikehell/airi)](LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+
+
 - [DevLog @ 2026.03.23: Mobile performance and game engine exploration](https://airi.moeru.ai/docs/en/blog/DevLog-2026.03.23/) - March 23, 2026
 - [DevLog @ 2026.03.14: VRM stage lifecycle, cache, and observability](https://airi.moeru.ai/docs/en/blog/DevLog-2026.03.14/) - March 14, 2026
 - [DevLog @ 2026.02.16: Dome Keeper data collection and training pipeline](https://airi.moeru.ai/docs/en/blog/DevLog-2026.02.16/) - February 16, 2026
