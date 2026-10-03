@@ -1,7 +1,8 @@
 # Release Notes
 
-## 2026-10-02
+## 2026-10-03
 
+* docs: update RELEASE_NOTES.md (17c7c8d2c)
 * chore: add GitHub templates and workflows (4d5b95dab)
 * ci: update gource visualization (automated) (77f6cd8ba)
 * ci: update gource visualization (2026-09-22 1080p render) (bdbe9e23d)
@@ -21,4 +22,3 @@
 * feat(stage-ui): add Prompt API Provider (#2299) (ad24cfe62)
 * chore(nix): update pnpmDeps hash (#2566) (438a067dd)
 * feat(stage-tamagotchi): add desktop computer use with AUV (#2565) (c38b0a34f)
-* fix(stage-ui): hide browser local transcription provider until its settings page exists (#2558) (6d3fd7a60)
