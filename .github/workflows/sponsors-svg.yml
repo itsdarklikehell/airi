@@ -31,13 +31,26 @@ jobs:
       - name: Pull with rebase
         run: git pull origin main --rebase --autostash
 
+      - name: Check Patreon token
+        id: check_token
+        run: |
+          if [ -z "$SPONSORKIT_PATREON_TOKEN" ]; then
+            echo "Patreon token is not set. Skipping sponsors generation."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate sponsors svg
+        if: steps.check_token.outputs.skip != 'true'
         run: pnpm run sponsors:generate
 
       - name: Remove private SponsorKit cache
+        if: steps.check_token.outputs.skip != 'true'
         run: rm -f docs/content/public/assets/sponsors/.cache.json
 
       - name: Create or update sponsors PR
+        if: steps.check_token.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.PAT_SLASH_COMMAND_DISPATCH }}
           SPONSORS_BRANCH: automation/update-sponsors-svg
